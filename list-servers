@@ -1,0 +1,34 @@
+#!/bin/bash
+
+old=$IFS
+IFS='
+'
+
+# Handle arguments
+while true; do
+  case "$1" in
+    -h | --hostnames ) SHOW_HOSTNAMES=true; shift ;;
+    -- ) shift; break ;;
+    * ) break ;;
+  esac
+done
+
+
+array=`ec2-describe-instances --filter instance-state-name=running --filter instance-state-name=pending --filter instance-state-name=stopping --filter instance-state-name=stopped --filter instance-state-name=shutting-down`
+
+for line in $array; do
+  IFS=$old
+  set $line
+  if [ $SHOW_HOSTNAMES ]; then
+    if [ "$1" == "INSTANCE" ]; then
+      echo $4
+    fi
+  else
+    if [[ "$1" == "TAG" && "$4" == "Name" ]]; then
+      echo $5
+    fi
+  fi
+done
+
+IFS=$old
+
