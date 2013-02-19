@@ -1,5 +1,6 @@
 #!/bin/bash
 
+SHOW_HOSTNAMES=true
 old=$IFS
 IFS='
 '
@@ -21,12 +22,11 @@ for line in $array; do
   set $line
   if [ $SHOW_HOSTNAMES ]; then
     if [ "$1" == "INSTANCE" ]; then
-      echo $4
+      echo "Host: $4"
     fi
-  else
-    if [[ "$1" == "TAG" && "$4" == "Name" ]]; then
-      echo $5
-    fi
+  fi
+  if [[ "$1" == "TAG" && "$4" == "Name" ]]; then
+    echo "Name: $5"
   fi
 done
 
