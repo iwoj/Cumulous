@@ -4,7 +4,7 @@ Cumulous
 Simple cloud server management, from the command line.
 
 - **list-servers**
-  - Outputs a list of all your EC2 servers
+  - Outputs a list of all your [EC2](http://aws.amazon.com/ec2/) servers
 - **create-server [name]**
   - Creates a new server with the given tag name. Returns the hostname.
 - **kill-server [name]**
