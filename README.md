@@ -3,9 +3,9 @@ Cumulous
 
 Simple cloud server management, from the command line.
 
-- *list-servers* - Outputs a list of all your EC2 servers
-- *create-server name* - Created a new server with the given tag name. Returns the hostname.
-- *kill-server name* - Kills all servers matching the given name.
+- **list-servers** - Outputs a list of all your EC2 servers
+- **create-server [name]** - Created a new server with the given tag name. Returns the hostname.
+- **kill-server [name]** - Kills all servers matching the given name.
 
 Be patient. These scripts may take up to twenty or thirty seconds to run sometimes.
 
