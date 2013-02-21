@@ -1,8 +1,18 @@
 #!/bin/bash
 
-NAME="$1"
+NAME=
+KEY_NAME="miscproj-ec2"
 UBUNTU_12_AMI=ami-3d4ff254
 NOT_TERMINATED="--filter instance-state-name=running --filter instance-state-name=pending --filter instance-state-name=stopping --filter instance-state-name=stopped --filter instance-state-name=shutting-down"
+
+# Handle arguments
+while true; do
+  case "$1" in
+    -k | --key-name ) KEY_NAME="$2"; shift; shift ;;
+    -- ) shift; break ;;
+    * ) NAME="$1"; break ;;
+  esac
+done
 
 # Check NAME uniqueness
 EC2_DESCRIBE=`ec2-describe-instances --filter tag:Name=$NAME $NOT_TERMINATED`
@@ -12,7 +22,7 @@ if [ "$EC2_DESCRIBE" != "" ]; then
 fi
 
 # Create server instance.
-EC2_RUN=`ec2run $UBUNTU_12_AMI -k miscproj-ec2 -t t1.micro`
+EC2_RUN=`ec2run $UBUNTU_12_AMI -k $KEY_NAME -t t1.micro`
 set $EC2_RUN
 INSTANCE=$6
 RESOURCE=$2
