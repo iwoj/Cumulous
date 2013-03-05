@@ -1,0 +1,23 @@
+#!/bin/bash
+
+NAME="$1"
+UBUNTU_12_AMI=ami-3d4ff254
+EC2_DESCRIBE=`ec2-describe-instances --filter tag:Name=$NAME --filter instance-state-name=running`
+
+if [ "$EC2_DESCRIBE" == "" ]; then
+  echo "$NAME not found"
+  exit 0
+fi
+
+set $EC2_DESCRIBE
+INSTANCE=$6
+HOSTNAME=$8
+
+EC2_TERMINATE=`ec2-terminate-instances $INSTANCE`
+
+set $EC2_TERMINATE
+
+if [ "$INSTANCE" == "$2" ]; then
+  echo "$HOSTNAME terminated"
+fi
+
