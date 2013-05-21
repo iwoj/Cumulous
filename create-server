@@ -2,7 +2,8 @@
 
 NAME=
 KEY_NAME="miscproj-ec2"
-UBUNTU_12_AMI=ami-3d4ff254
+UBUNTU_12_AMI=ami-3d4ff254 # Ubuntu 12.04
+#UBUNTU_12_AMI=ami-7539b41c # Ubuntu 12.10
 NOT_TERMINATED="--filter instance-state-name=running --filter instance-state-name=pending --filter instance-state-name=stopping --filter instance-state-name=stopped --filter instance-state-name=shutting-down"
 
 # Handle arguments
