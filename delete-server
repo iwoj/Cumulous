@@ -1,7 +1,26 @@
 #!/bin/bash
 
-NAME="$1"
+NAME=
+KEY_NAME=$EC2_KEYPAIR
+EC2_KEYPAIR=$KEY_NAME;
+EC2_PRIVATE_KEY=~/.ec2/pk-$KEY_NAME.pem
+EC2_CERT=~/.ec2/cert-$KEY_NAME.pem
 UBUNTU_12_AMI=ami-3d4ff254
+
+# Handle arguments
+while true; do
+  case "$1" in
+    -k | --key-name ) 
+      KEY_NAME="$2"; 
+      EC2_KEYPAIR=$KEY_NAME;
+      EC2_PRIVATE_KEY=~/.ec2/pk-$KEY_NAME.pem
+      EC2_CERT=~/.ec2/cert-$KEY_NAME.pem
+      shift; shift ;;
+    -- ) shift; break ;;
+    * ) NAME="$1"; break ;;
+  esac
+done
+
 EC2_DESCRIBE=`ec2-describe-instances --filter tag:Name=$NAME --filter instance-state-name=running`
 
 if [ "$EC2_DESCRIBE" == "" ]; then
